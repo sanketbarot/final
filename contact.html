@@ -10,58 +10,292 @@
 </head>
 <body>
 
-<div class="bg-particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<!-- Background Blobs -->
+<div class="bg-blobs">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+</div>
 
+<!-- NAVBAR -->
 <nav class="navbar" id="navbar">
-  <div class="container"><div class="nav-inner">
-    <a href="index.html" class="nav-logo"><i class="fas fa-crown"></i> Deco<span class="gold-text">Stock</span></a>
-    <ul class="nav-menu" id="navMenu">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="items.html">Items</a></li>
-      <li><a href="contact.html" class="active">Contact</a></li>
-      <li><a href="login.html" class="btn-nav-login">Login</a></li>
-      <li><a href="signup.html" class="btn-nav-signup">Sign Up</a></li>
-    </ul>
-    <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
-  </div></div>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <i class="fas fa-crown"></i> Deco<span class="logo-highlight">Stock</span>
+      </a>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="items.html">Items</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><a href="login.html" class="btn-nav-login">Login</a></li>
+        <li><a href="signup.html" class="btn-nav-signup">Sign Up</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
 </nav>
 
+<!-- CONTACT PAGE -->
 <div class="contact-page">
   <div class="container">
-    <div class="section-title"><h2>Contact Us</h2><div class="line"></div><p>Get in touch with us for any queries</p></div>
+
+    <!-- Page Header -->
+    <div class="contact-header">
+      <div class="contact-badge"><i class="fas fa-headset"></i> We'd love to hear from you</div>
+      <h1>Get In <span class="gradient-text">Touch</span></h1>
+      <p>Have questions about our decoration items? Need help with a booking? We're here to help!</p>
+    </div>
+
+    <!-- Main Grid -->
     <div class="contact-grid">
-      <div class="info-cards">
-        <div class="info-card glass"><div class="info-icon"><i class="fas fa-phone"></i></div><div><h4>Phone</h4><p>+91 98765 43210</p></div></div>
-        <div class="info-card glass"><div class="info-icon"><i class="fas fa-envelope"></i></div><div><h4>Email</h4><p>info@decostock.com</p></div></div>
-        <div class="info-card glass"><div class="info-icon"><i class="fas fa-map-marker-alt"></i></div><div><h4>Address</h4><p>123, Decoration Street, Gujarat, India</p></div></div>
-        <div class="info-card glass"><div class="info-icon"><i class="fas fa-clock"></i></div><div><h4>Working Hours</h4><p>Mon - Sat: 9AM to 8PM</p></div></div>
-      </div>
-      <div class="contact-form glass-strong">
-        <h2><i class="fas fa-paper-plane"></i> Send Message</h2>
-        <div id="contactAlert"></div>
-        <form id="contactForm">
-          <div class="form-row">
-            <div class="form-group"><label>Your Name</label><input type="text" id="cName" placeholder="Enter name" required></div>
-            <div class="form-group"><label>Your Email</label><input type="email" id="cEmail" placeholder="Enter email" required></div>
+
+      <!-- LEFT: Info Cards + Social + Map -->
+      <div class="contact-left">
+
+        <!-- Info Cards -->
+        <div class="info-card" id="phoneCard">
+          <div class="info-icon purple">
+            <i class="fas fa-phone-alt"></i>
           </div>
-          <div class="form-group"><label>Subject</label><input type="text" id="cSubject" placeholder="Enter subject" required></div>
-          <div class="form-group"><label>Message</label><textarea id="cMessage" rows="5" placeholder="Write your message..." required></textarea></div>
-          <button type="submit" class="btn btn-primary btn-full"><i class="fas fa-paper-plane"></i> Send Message</button>
-        </form>
+          <div class="info-text">
+            <h4>Call Us</h4>
+            <p><a href="tel:+919876543210">+91 98765 43210</a></p>
+            <span class="info-sub">Mon - Sat, 9AM to 8PM</span>
+          </div>
+          <div class="info-arrow"><i class="fas fa-chevron-right"></i></div>
+        </div>
+
+        <div class="info-card" id="emailCard">
+          <div class="info-icon green">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div class="info-text">
+            <h4>Email Us</h4>
+            <p><a href="mailto:info@decostock.com">info@decostock.com</a></p>
+            <span class="info-sub">We reply within 24 hours</span>
+          </div>
+          <div class="info-arrow"><i class="fas fa-chevron-right"></i></div>
+        </div>
+
+        <div class="info-card" id="whatsappCard">
+          <div class="info-icon orange">
+            <i class="fab fa-whatsapp"></i>
+          </div>
+          <div class="info-text">
+            <h4>WhatsApp</h4>
+            <p><a href="https://wa.me/919876543210" target="_blank">+91 98765 43210</a></p>
+            <span class="info-sub">Quick response guaranteed</span>
+          </div>
+          <div class="info-arrow"><i class="fas fa-chevron-right"></i></div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon blue">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="info-text">
+            <h4>Visit Us</h4>
+            <p>123, Decoration Street</p>
+            <span class="info-sub">Gujarat, India - 395001</span>
+          </div>
+          <div class="info-arrow"><i class="fas fa-chevron-right"></i></div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="social-card">
+          <h4><i class="fas fa-share-alt"></i> Follow Us</h4>
+          <div class="social-icons">
+            <a href="#" class="social-icon-btn instagram" title="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-icon-btn facebook" title="Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-icon-btn whatsapp" title="WhatsApp">
+              <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="#" class="social-icon-btn youtube" title="YouTube">
+              <i class="fab fa-youtube"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Contact Form -->
+      <div class="contact-right">
+        <div class="contact-form-card">
+          <div class="contact-form-title">
+            <i class="fas fa-paper-plane"></i>
+            <span>Send us a Message</span>
+          </div>
+
+          <div id="contactAlert"></div>
+
+          <form id="contactForm">
+            <!-- Name & Email Row -->
+            <div class="form-row">
+              <div class="form-group">
+                <label><i class="fas fa-user"></i> Your Name</label>
+                <div class="contact-input-wrap">
+                  <i class="fas fa-user"></i>
+                  <input type="text" id="cName" placeholder="Enter your full name" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label><i class="fas fa-envelope"></i> Your Email</label>
+                <div class="contact-input-wrap">
+                  <i class="fas fa-envelope"></i>
+                  <input type="email" id="cEmail" placeholder="Enter email address" required>
+                </div>
+              </div>
+            </div>
+
+            <!-- Phone & Subject Row -->
+            <div class="form-row">
+              <div class="form-group">
+                <label><i class="fas fa-phone"></i> Phone (Optional)</label>
+                <div class="contact-input-wrap">
+                  <i class="fas fa-phone"></i>
+                  <input type="tel" id="cPhone" placeholder="Enter phone number">
+                </div>
+              </div>
+              <div class="form-group">
+                <label><i class="fas fa-tag"></i> Subject</label>
+                <div class="select-wrap">
+                  <i class="fas fa-tag icon-left"></i>
+                  <select class="subject-select" id="cSubject" required>
+                    <option value="">Select subject</option>
+                    <option value="booking">Booking Query</option>
+                    <option value="stock">Stock Availability</option>
+                    <option value="delivery">Delivery Issue</option>
+                    <option value="payment">Payment Issue</option>
+                    <option value="feedback">Feedback</option>
+                    <option value="other">Other</option>
+                  </select>
+                  <i class="fas fa-chevron-down icon-arrow"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Message -->
+            <div class="form-group">
+              <label><i class="fas fa-comment-dots"></i> Message</label>
+              <div class="contact-input-wrap textarea-wrap">
+                <i class="fas fa-comment-dots"></i>
+                <textarea id="cMessage" rows="5" placeholder="Write your message here..." required maxlength="500"></textarea>
+              </div>
+              <div class="char-count" id="charCount">500 characters remaining</div>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-primary btn-full">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <div class="faq-title">
+        <h2>Frequently Asked <span class="gradient-text">Questions</span></h2>
+        <p>Quick answers to common questions</p>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question">
+            <h4>How do I book decoration items?</h4>
+            <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>Simply browse our Items page, select the item you want, choose quantity and date, fill in your details, and confirm your booking. It's that easy!</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <h4>What is your delivery area?</h4>
+            <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>We deliver across Gujarat and nearby states. Delivery charges may vary based on location. Contact us for specific delivery inquiries.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <h4>Can I cancel my booking?</h4>
+            <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, you can cancel pending bookings from your My Bookings page. Confirmed bookings may have cancellation charges. Contact us for assistance.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <h4>Do you provide setup services?</h4>
+            <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>Yes! We offer professional setup services for mandap, lighting, and stage decoration. Additional charges apply based on requirements.</p>
+          </div>
+        </div>
       </div>
     </div>
+
   </div>
 </div>
 
+<!-- FOOTER -->
 <footer class="footer">
   <div class="container">
     <div class="footer-grid">
-      <div class="footer-brand"><div class="footer-logo"><i class="fas fa-crown"></i> Deco<span class="gold-text">Stock</span></div><p>Premium decoration items.</p><div class="social-links"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i class="fab fa-whatsapp"></i></a></div></div>
-      <div class="footer-col"><h3>Quick Links</h3><a href="index.html">Home</a><a href="items.html">Items</a><a href="contact.html">Contact</a></div>
-      <div class="footer-col"><h3>Categories</h3><a href="#">Mandap</a><a href="#">Lighting</a><a href="#">Party</a></div>
-      <div class="footer-col"><h3>Contact</h3><div class="footer-contact-item"><i class="fas fa-phone"></i><span>+91 98765 43210</span></div><div class="footer-contact-item"><i class="fas fa-envelope"></i><span>info@decostock.com</span></div></div>
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <i class="fas fa-crown"></i> Deco<span class="gradient-text">Stock</span>
+        </div>
+        <p>Premium decoration items for your special events. Book online with real-time stock updates.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <a href="index.html">Home</a>
+        <a href="items.html">Items</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h3>Categories</h3>
+        <a href="#">Mandap Setup</a>
+        <a href="#">Lighting</a>
+        <a href="#">Party Decor</a>
+      </div>
+      <div class="footer-col">
+        <h3>Contact</h3>
+        <div class="footer-contact-item">
+          <i class="fas fa-phone"></i><span>+91 98765 43210</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fas fa-envelope"></i><span>info@decostock.com</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fas fa-map-marker-alt"></i><span>Gujarat, India</span>
+        </div>
+      </div>
     </div>
-    <div class="footer-bottom"><p>&copy; 2024 DecoStock. All rights reserved.</p></div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 DecoStock. All rights reserved. Made with ❤️</p>
+    </div>
   </div>
 </footer>
 

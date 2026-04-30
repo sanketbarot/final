@@ -1,9 +1,8 @@
 /* ======================================== */
 /* contact.js - Contact Page JavaScript     */
-/* Light Theme + Performance Optimized      */
+/* Fixed + Performance Optimized            */
 /* ======================================== */
 
-// ===== INIT =====
 document.addEventListener('DOMContentLoaded', function () {
   setupContactForm();
   setupFAQ();
@@ -16,10 +15,8 @@ function setupContactForm() {
   var form = document.getElementById('contactForm');
   if (!form) return;
 
-  // Real-time validation
   setupContactValidation();
 
-  // Form submit
   form.addEventListener('submit', function (e) {
     e.preventDefault();
 
@@ -28,17 +25,16 @@ function setupContactForm() {
     var submitBtn = form.querySelector('button[type="submit"]');
     setButtonLoading(submitBtn, true);
 
-    // Simulate API call (replace with real API)
     setTimeout(function () {
       setButtonLoading(submitBtn, false);
       showContactSuccess();
       form.reset();
       resetCharCount();
-    }, 1200);
+    }, 1000);
   });
 }
 
-// ===== CONTACT VALIDATION =====
+// ===== VALIDATION =====
 function setupContactValidation() {
   var nameInput = document.getElementById('cName');
   var emailInput = document.getElementById('cEmail');
@@ -48,7 +44,7 @@ function setupContactValidation() {
   if (nameInput) {
     nameInput.addEventListener('blur', function () {
       if (this.value.trim().length < 2) {
-        showFieldError('cName', 'Please enter your full name');
+        showFieldError('cName', 'Enter your full name');
       } else {
         clearFieldError('cName');
       }
@@ -57,8 +53,8 @@ function setupContactValidation() {
 
   if (emailInput) {
     emailInput.addEventListener('blur', function () {
-      if (!isValidEmail(this.value.trim())) {
-        showFieldError('cEmail', 'Please enter a valid email address');
+      if (!isValidContactEmail(this.value.trim())) {
+        showFieldError('cEmail', 'Enter a valid email');
       } else {
         clearFieldError('cEmail');
       }
@@ -66,17 +62,8 @@ function setupContactValidation() {
   }
 
   if (phoneInput) {
-    // Allow only numbers
     phoneInput.addEventListener('input', function () {
       this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
-    });
-
-    phoneInput.addEventListener('blur', function () {
-      if (this.value.length > 0 && this.value.length < 10) {
-        showFieldError('cPhone', 'Please enter valid 10-digit phone number');
-      } else {
-        clearFieldError('cPhone');
-      }
     });
   }
 
@@ -91,20 +78,25 @@ function setupContactValidation() {
   }
 }
 
-// ===== VALIDATE CONTACT FORM =====
 function validateContactForm() {
   var name = document.getElementById('cName');
   var email = document.getElementById('cEmail');
+  var subject = document.getElementById('cSubject');
   var message = document.getElementById('cMessage');
   var hasError = false;
 
   if (name && name.value.trim().length < 2) {
-    showFieldError('cName', 'Please enter your full name');
+    showFieldError('cName', 'Enter your full name');
     hasError = true;
   }
 
-  if (email && !isValidEmail(email.value.trim())) {
-    showFieldError('cEmail', 'Please enter a valid email address');
+  if (email && !isValidContactEmail(email.value.trim())) {
+    showFieldError('cEmail', 'Enter a valid email');
+    hasError = true;
+  }
+
+  if (subject && !subject.value) {
+    showFieldError('cSubject', 'Please select a subject');
     hasError = true;
   }
 
@@ -116,17 +108,18 @@ function validateContactForm() {
   return !hasError;
 }
 
-// ===== SHOW CONTACT SUCCESS =====
+// ===== SUCCESS =====
 function showContactSuccess() {
   var alertEl = document.getElementById('contactAlert');
   if (alertEl) {
     alertEl.innerHTML =
       '<div class="alert alert-success">' +
-        '<i class="fas fa-check-circle"></i>' +
-        ' Message sent successfully! We will contact you within 24 hours. ✨' +
+        '<i class="fas fa-check-circle"></i> ' +
+        'Message sent successfully! We\'ll respond within 24 hours. ✨' +
       '</div>';
 
-    // Auto hide after 5 seconds
+    alertEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
     setTimeout(function () {
       alertEl.innerHTML = '';
     }, 5000);
@@ -139,36 +132,28 @@ function showContactSuccess() {
 function setupCharCount() {
   var messageInput = document.getElementById('cMessage');
   var charCountEl = document.getElementById('charCount');
-
   if (!messageInput || !charCountEl) return;
 
-  var maxChars = 500;
-
   messageInput.addEventListener('input', function () {
-    var remaining = maxChars - this.value.length;
+    var remaining = 500 - this.value.length;
     charCountEl.textContent = remaining + ' characters remaining';
-
-    if (remaining < 50) {
-      charCountEl.className = 'char-count warning';
-    } else {
-      charCountEl.className = 'char-count';
-    }
+    charCountEl.className = remaining < 50 ? 'char-count warning' : 'char-count';
   });
 }
 
 function resetCharCount() {
-  var charCountEl = document.getElementById('charCount');
-  if (charCountEl) {
-    charCountEl.textContent = '500 characters remaining';
-    charCountEl.className = 'char-count';
+  var el = document.getElementById('charCount');
+  if (el) {
+    el.textContent = '500 characters remaining';
+    el.className = 'char-count';
   }
 }
 
-// ===== FAQ ACCORDION =====
+// ===== FAQ =====
 function setupFAQ() {
-  var faqItems = document.querySelectorAll('.faq-item');
+  var items = document.querySelectorAll('.faq-item');
 
-  faqItems.forEach(function (item) {
+  items.forEach(function (item) {
     var question = item.querySelector('.faq-question');
     if (!question) return;
 
@@ -176,50 +161,40 @@ function setupFAQ() {
       var isOpen = item.classList.contains('open');
 
       // Close all
-      faqItems.forEach(function (faq) {
-        faq.classList.remove('open');
-      });
+      items.forEach(function (faq) { faq.classList.remove('open'); });
 
-      // Open clicked (if was closed)
-      if (!isOpen) {
-        item.classList.add('open');
-      }
+      // Toggle clicked
+      if (!isOpen) item.classList.add('open');
     });
   });
 }
 
 // ===== INFO CARD LINKS =====
 function setupInfoCardLinks() {
-  // Phone click to call
   var phoneCard = document.getElementById('phoneCard');
+  var emailCard = document.getElementById('emailCard');
+  var whatsappCard = document.getElementById('whatsappCard');
+
   if (phoneCard) {
     phoneCard.addEventListener('click', function () {
       window.location.href = 'tel:+919876543210';
     });
-    phoneCard.style.cursor = 'pointer';
   }
 
-  // Email click
-  var emailCard = document.getElementById('emailCard');
   if (emailCard) {
     emailCard.addEventListener('click', function () {
       window.location.href = 'mailto:info@decostock.com';
     });
-    emailCard.style.cursor = 'pointer';
   }
 
-  // WhatsApp click
-  var whatsappCard = document.getElementById('whatsappCard');
   if (whatsappCard) {
     whatsappCard.addEventListener('click', function () {
       window.open('https://wa.me/919876543210', '_blank');
     });
-    whatsappCard.style.cursor = 'pointer';
   }
 }
 
-// ===== EMAIL VALIDATION HELPER =====
-function isValidEmail(email) {
-  var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(email);
+// ===== EMAIL HELPER =====
+function isValidContactEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }

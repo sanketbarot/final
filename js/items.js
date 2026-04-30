@@ -1,6 +1,6 @@
 /* ======================================== */
 /* items.js - Items Page JavaScript         */
-/* Light Theme + Performance Optimized      */
+/* ⚡ PERFORMANCE OPTIMIZED VERSION         */
 /* ======================================== */
 
 // ===== STATE =====
@@ -8,15 +8,23 @@ var currentCategory = 'All';
 var searchQuery = '';
 var itemsList = [];
 var isLoading = false;
+var gridElement = null;
+var noItemsElement = null;
+var countElement = null;
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', function () {
-  // Check URL for category param (from home page click)
+
+  // Cache DOM elements (no repeated querySelector)
+  gridElement = document.getElementById('itemsGrid');
+  noItemsElement = document.getElementById('noItems');
+  countElement = document.getElementById('itemsCount');
+
+  // Check URL for category param
   var params = new URLSearchParams(window.location.search);
   var urlCategory = params.get('category');
   if (urlCategory) {
     currentCategory = urlCategory;
-    // Set active filter button
     setActiveFilter(urlCategory);
   }
 
@@ -24,215 +32,213 @@ document.addEventListener('DOMContentLoaded', function () {
   setupSearch();
   setupFilters();
 
-  // Load items
-  loadItems();
+  // Load items IMMEDIATELY with sample data first
+  itemsList = sampleItems;
+  renderItems();
+
+  // Then try API in background (non-blocking)
+  loadFromAPI();
 });
 
-// ===== LOAD ITEMS FROM API =====
-function loadItems() {
-  if (isLoading) return;
-  isLoading = true;
+// ===== LOAD FROM API (Background - Non Blocking) =====
+function loadFromAPI() {
+  // Use timeout to prevent hanging
+  var controller = null;
+  var timeoutId = null;
 
-  // Show skeleton loader
-  showSkeletonLoader();
+  // AbortController for timeout
+  if (window.AbortController) {
+    controller = new AbortController();
+    timeoutId = setTimeout(function () {
+      controller.abort();
+    }, 3000); // 3 second timeout
+  }
 
-  fetch(API_URL + '/items')
+  var fetchOptions = {};
+  if (controller) {
+    fetchOptions.signal = controller.signal;
+  }
+
+  fetch(API_URL + '/items', fetchOptions)
     .then(function (res) {
       if (!res.ok) throw new Error('API Error');
       return res.json();
     })
     .then(function (data) {
+      clearTimeout(timeoutId);
       if (data && Array.isArray(data) && data.length > 0) {
         itemsList = data;
-      } else {
-        itemsList = sampleItems;
+        renderItems();
       }
-      isLoading = false;
-      renderItems();
     })
     .catch(function () {
-      // Use sample data if API fails
-      itemsList = sampleItems;
-      isLoading = false;
-      renderItems();
+      clearTimeout(timeoutId);
+      // Already showing sample data, do nothing
     });
 }
 
-// ===== SHOW SKELETON LOADER =====
-function showSkeletonLoader() {
-  var grid = document.getElementById('itemsGrid');
-  if (!grid) return;
-
-  var skeletonHTML = '';
-  for (var i = 0; i < 8; i++) {
-    skeletonHTML +=
-      '<div class="skeleton-card">' +
-        '<div class="skeleton-img"></div>' +
-        '<div class="skeleton-body">' +
-          '<div class="skeleton-line short"></div>' +
-          '<div class="skeleton-line medium"></div>' +
-          '<div class="skeleton-line long"></div>' +
-          '<div class="skeleton-line short"></div>' +
-        '</div>' +
-      '</div>';
-  }
-  grid.innerHTML = skeletonHTML;
-}
-
-// ===== RENDER ITEMS =====
+// ===== RENDER ITEMS (Optimized) =====
 function renderItems() {
-  var grid = document.getElementById('itemsGrid');
-  var noItems = document.getElementById('noItems');
-  var countEl = document.getElementById('itemsCount');
-
-  if (!grid) return;
+  if (!gridElement) return;
 
   // Filter items
-  var filtered = filterItemsList();
+  var filtered = getFilteredItems();
 
   // Update count
-  if (countEl) {
-    countEl.textContent = filtered.length + ' item' + (filtered.length !== 1 ? 's' : '') + ' found';
+  if (countElement) {
+    countElement.textContent = filtered.length + ' item' + (filtered.length !== 1 ? 's' : '');
   }
 
-  // Show no items
+  // No items
   if (filtered.length === 0) {
-    grid.innerHTML = '';
-    if (noItems) noItems.style.display = 'block';
+    gridElement.innerHTML = '';
+    if (noItemsElement) noItemsElement.style.display = 'block';
     return;
   }
 
-  if (noItems) noItems.style.display = 'none';
+  if (noItemsElement) noItemsElement.style.display = 'none';
 
-  // Build HTML
-  var html = '';
-  for (var j = 0; j < filtered.length; j++) {
-    html += buildItemCard(filtered[j]);
+  // Build HTML using array join (faster than string concat)
+  var parts = [];
+  var len = filtered.length;
+
+  for (var i = 0; i < len; i++) {
+    parts.push(buildCard(filtered[i]));
   }
 
-  grid.innerHTML = html;
+  // Single DOM update (fastest)
+  gridElement.innerHTML = parts.join('');
 }
 
-// ===== FILTER ITEMS LIST =====
-function filterItemsList() {
+// ===== GET FILTERED ITEMS =====
+function getFilteredItems() {
   var filtered = [];
+  var len = itemsList.length;
+  var query = searchQuery.toLowerCase();
+  var cat = currentCategory;
 
-  for (var i = 0; i < itemsList.length; i++) {
+  for (var i = 0; i < len; i++) {
     var item = itemsList[i];
 
-    var matchCat = currentCategory === 'All' || item.category === currentCategory;
-    var matchSearch = !searchQuery ||
-      item.name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1 ||
-      item.category.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
+    // Category check
+    if (cat !== 'All' && item.category !== cat) continue;
 
-    if (matchCat && matchSearch) {
-      filtered.push(item);
+    // Search check
+    if (query) {
+      var name = item.name.toLowerCase();
+      var category = item.category.toLowerCase();
+      if (name.indexOf(query) === -1 && category.indexOf(query) === -1) continue;
     }
+
+    filtered.push(item);
   }
 
   return filtered;
 }
 
-// ===== BUILD ITEM CARD HTML =====
-function buildItemCard(item) {
+// ===== BUILD CARD HTML (Optimized - No unnecessary stuff) =====
+function buildCard(item) {
   var id = item._id || item.id;
-  var stockBadge = getStockBadge(item.stock);
-  var ratingStars = buildStars(item.rating || 4.5);
-  var bookButton = '';
+  var stock = item.stock || 0;
+  var emoji = item.emoji || '🎁';
+  var rating = item.rating || 4.5;
+  var price = item.price || 0;
 
-  if (item.stock > 0) {
-    bookButton =
-      '<a href="booking.html?id=' + id + '" class="book-btn">' +
-        '<i class="fas fa-shopping-cart"></i> Book' +
-      '</a>';
+  // Stock badge - simple inline
+  var stockHTML = '';
+  if (stock === 0) {
+    stockHTML = '<span class="stag sd"><i class="fas fa-times-circle"></i> Out</span>';
+  } else if (stock <= 5) {
+    stockHTML = '<span class="stag sw"><i class="fas fa-exclamation-triangle"></i> ' + stock + ' left</span>';
   } else {
-    bookButton =
-      '<button class="book-btn disabled" disabled>' +
-        '<i class="fas fa-times"></i> Sold Out' +
-      '</button>';
+    stockHTML = '<span class="stag ss"><i class="fas fa-check-circle"></i> ' + stock + '</span>';
   }
 
-  return (
-    '<div class="item-card" data-id="' + id + '">' +
-      '<div class="item-img">' +
-        '<span class="item-emoji">' + (item.emoji || '🎁') + '</span>' +
-        '<div class="stock-tag">' + stockBadge + '</div>' +
+  // Book button
+  var btnHTML = stock > 0
+    ? '<a href="booking.html?id=' + id + '" class="bbtn"><i class="fas fa-shopping-cart"></i> Book</a>'
+    : '<button class="bbtn dis" disabled>Sold Out</button>';
+
+  // Price formatted
+  var priceStr = '₹' + price.toLocaleString('en-IN');
+
+  // Stars - simple
+  var starsHTML = getQuickStars(rating);
+
+  return '<div class="icard">' +
+    '<div class="iimg">' +
+      '<span class="iemoji">' + emoji + '</span>' +
+      '<div class="stag-wrap">' + stockHTML + '</div>' +
+    '</div>' +
+    '<div class="ibody">' +
+      '<span class="icat">' + item.category + '</span>' +
+      '<h3 class="iname">' + item.name + '</h3>' +
+      '<div class="irate">' + starsHTML + ' <b>' + rating + '</b></div>' +
+      '<div class="ibot">' +
+        '<span class="iprice">' + priceStr + '</span>' +
+        btnHTML +
       '</div>' +
-      '<div class="item-body">' +
-        '<div class="item-cat">' + item.category + '</div>' +
-        '<h3 title="' + item.name + '">' + item.name + '</h3>' +
-        '<div class="item-rating">' +
-          '<span class="rating-stars">' + ratingStars + '</span>' +
-          '<span class="rating-num">' + (item.rating || 4.5) + '</span>' +
-        '</div>' +
-        '<div class="item-bottom">' +
-          '<div class="item-price">' + formatPrice(item.price) + '</div>' +
-          bookButton +
-        '</div>' +
-      '</div>' +
-    '</div>'
-  );
+    '</div>' +
+  '</div>';
 }
 
-// ===== BUILD STAR RATING =====
-function buildStars(rating) {
-  var html = '';
-  var full = Math.floor(rating);
-  var half = (rating % 1) >= 0.5 ? 1 : 0;
-  var empty = 5 - full - half;
+// ===== QUICK STAR RATING (No loops) =====
+function getQuickStars(r) {
+  var s = '';
+  var full = Math.floor(r);
+  var half = (r % 1) >= 0.5;
 
-  for (var i = 0; i < full; i++) {
-    html += '<i class="fas fa-star"></i>';
-  }
-  if (half) {
-    html += '<i class="fas fa-star-half-alt"></i>';
-  }
-  for (var j = 0; j < empty; j++) {
-    html += '<i class="far fa-star"></i>';
-  }
-  return html;
+  if (full >= 1) s += '★';
+  if (full >= 2) s += '★';
+  if (full >= 3) s += '★';
+  if (full >= 4) s += '★';
+  if (full >= 5) s += '★';
+  if (half && full < 5) s += '½';
+
+  return '<span class="stars">' + s + '</span>';
 }
 
-// ===== SETUP SEARCH =====
+// ===== SETUP SEARCH (Debounced) =====
 function setupSearch() {
-  var searchInput = document.getElementById('searchInput');
+  var input = document.getElementById('searchInput');
   var clearBtn = document.getElementById('searchClear');
+  if (!input) return;
 
-  if (!searchInput) return;
+  var timer = null;
 
-  // Debounced search
-  var debouncedSearch = debounce(function () {
-    searchQuery = searchInput.value.trim();
+  input.addEventListener('input', function () {
+    var val = this.value;
 
-    // Show/hide clear button
+    // Show/hide clear
     if (clearBtn) {
-      if (searchQuery.length > 0) {
-        clearBtn.classList.add('show');
-      } else {
-        clearBtn.classList.remove('show');
-      }
+      clearBtn.style.display = val.length > 0 ? 'block' : 'none';
     }
 
-    renderItems();
-  }, 300);
-
-  searchInput.addEventListener('input', debouncedSearch);
+    // Debounce 200ms
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      searchQuery = val.trim();
+      renderItems();
+    }, 200);
+  });
 
   // Clear button
   if (clearBtn) {
+    clearBtn.style.display = 'none';
     clearBtn.addEventListener('click', function () {
-      searchInput.value = '';
+      input.value = '';
       searchQuery = '';
-      clearBtn.classList.remove('show');
-      searchInput.focus();
+      this.style.display = 'none';
+      input.focus();
       renderItems();
     });
   }
 
-  // Search on Enter
-  searchInput.addEventListener('keydown', function (e) {
+  // Enter key
+  input.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') {
       e.preventDefault();
+      clearTimeout(timer);
       searchQuery = this.value.trim();
       renderItems();
     }
@@ -241,35 +247,33 @@ function setupSearch() {
 
 // ===== SETUP FILTERS =====
 function setupFilters() {
-  var filterBtns = document.querySelectorAll('.filter-btn');
+  var btns = document.querySelectorAll('.filter-btn');
+  var len = btns.length;
 
-  for (var i = 0; i < filterBtns.length; i++) {
-    filterBtns[i].addEventListener('click', function () {
-      // Remove active from all
-      for (var j = 0; j < filterBtns.length; j++) {
-        filterBtns[j].classList.remove('active');
-      }
-
-      // Add active to clicked
-      this.classList.add('active');
-      currentCategory = this.getAttribute('data-category');
-
-      // Re-render
-      renderItems();
-    });
+  for (var i = 0; i < len; i++) {
+    btns[i].addEventListener('click', handleFilterClick);
   }
+}
+
+function handleFilterClick() {
+  // Remove active from all
+  var btns = document.querySelectorAll('.filter-btn');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].classList.remove('active');
+  }
+
+  this.classList.add('active');
+  currentCategory = this.getAttribute('data-category');
+  renderItems();
 }
 
 // ===== SET ACTIVE FILTER =====
 function setActiveFilter(category) {
-  var filterBtns = document.querySelectorAll('.filter-btn');
-
-  for (var i = 0; i < filterBtns.length; i++) {
-    var btn = filterBtns[i];
-    btn.classList.remove('active');
-
-    if (btn.getAttribute('data-category') === category) {
-      btn.classList.add('active');
+  var btns = document.querySelectorAll('.filter-btn');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].classList.remove('active');
+    if (btns[i].getAttribute('data-category') === category) {
+      btns[i].classList.add('active');
     }
   }
 }

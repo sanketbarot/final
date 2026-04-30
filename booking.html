@@ -10,99 +10,275 @@
 </head>
 <body>
 
-<div class="bg-particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<div class="bg-blobs">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
 
+<!-- NAVBAR -->
 <nav class="navbar" id="navbar">
-  <div class="container"><div class="nav-inner">
-    <a href="index.html" class="nav-logo"><i class="fas fa-crown"></i> Deco<span class="gold-text">Stock</span></a>
-    <ul class="nav-menu" id="navMenu">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="items.html" class="active">Items</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="login.html" class="btn-nav-login">Login</a></li>
-      <li><a href="signup.html" class="btn-nav-signup">Sign Up</a></li>
-    </ul>
-    <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
-  </div></div>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <i class="fas fa-crown"></i> Deco<span class="logo-highlight">Stock</span>
+      </a>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="items.html" class="active">Items</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="login.html" class="btn-nav-login">Login</a></li>
+        <li><a href="signup.html" class="btn-nav-signup">Sign Up</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
 </nav>
 
 <div class="booking-page">
   <div class="container">
-    <a href="items.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Items</a>
 
+    <a href="items.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Back to Items
+    </a>
+
+    <!-- Booking Section -->
     <div id="bookingSection">
       <div class="booking-grid">
-        <div class="item-preview glass-strong">
-          <div class="preview-img" id="previewEmoji">🎊</div>
-          <div class="preview-cat" id="previewCat">Category</div>
-          <h2 id="previewName">Item Name</h2>
-          <p class="desc" id="previewDesc">Item description.</p>
-          <div class="preview-price gold-text">₹<span id="previewPrice">0</span> <small>/per piece</small></div>
-          <div class="stock-info"><i class="fas fa-box-open"></i> <span id="previewStock">0</span> items available</div>
+
+        <!-- LEFT: Item Preview -->
+        <div class="item-preview">
+
+          <!-- Skeleton -->
+          <div id="previewSkeleton">
+            <div class="sk-box"></div>
+            <div class="sk-line w60"></div>
+            <div class="sk-line w90"></div>
+            <div class="sk-line w75"></div>
+            <div class="sk-line w45"></div>
+          </div>
+
+          <!-- Real Data -->
+          <div id="previewData" style="display:none;">
+            <div class="preview-img-box">
+              <span id="previewEmoji">🎁</span>
+            </div>
+
+            <div id="previewCat" class="preview-cat">Category</div>
+
+            <h2 id="previewName">Loading...</h2>
+
+            <div id="previewRating" class="preview-rating"></div>
+
+            <p id="previewDesc" class="preview-desc">Loading description...</p>
+
+            <div class="preview-price">
+              ₹<span id="previewPrice">0</span>
+              <small>/per piece</small>
+            </div>
+
+            <!-- ✅ REAL-TIME STOCK BOX -->
+            <div class="stock-info in-stock" id="stockInfo">
+              <i class="stock-icon fas fa-check-circle"></i>
+              <span id="stockNum">0</span>
+              <span class="stock-txt">items available</span>
+              <span class="live-pill">
+                <span class="live-dot" id="liveDot"></span>
+                LIVE
+              </span>
+            </div>
+
+          </div>
         </div>
 
-        <div class="booking-form glass-strong">
-          <h2>📋 Book This Item</h2>
+        <!-- RIGHT: Form -->
+        <div class="booking-form-card">
+          <div class="booking-form-title">
+            <i class="fas fa-clipboard-list"></i>
+            Book This Item
+          </div>
+
           <div id="formAlert"></div>
-          <form id="bookingForm">
-            <div class="form-group"><label><i class="fas fa-user"></i> Full Name</label><input type="text" id="bName" placeholder="Enter your full name" required></div>
-            <div class="form-group"><label><i class="fas fa-phone"></i> Phone Number</label><input type="tel" id="bPhone" placeholder="Enter phone number" required></div>
-            <div class="form-group"><label><i class="fas fa-map-marker-alt"></i> Delivery Address</label><textarea id="bAddress" rows="3" placeholder="Enter delivery address" required></textarea></div>
-            <div class="form-row">
-              <div class="form-group"><label><i class="fas fa-calendar"></i> Event Date</label><input type="date" id="bDate" required></div>
-              <div class="form-group"><label><i class="fas fa-box"></i> Quantity</label>
+
+          <form id="bookingForm" novalidate>
+            <div class="form-group">
+              <label><i class="fas fa-user"></i> Full Name <span class="req">*</span></label>
+              <div class="input-icon-wrap">
+                <i class="fas fa-user"></i>
+                <input type="text" id="bName" placeholder="Enter your full name" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label><i class="fas fa-phone"></i> Phone Number <span class="req">*</span></label>
+              <div class="input-icon-wrap">
+                <i class="fas fa-phone"></i>
+                <input type="tel" id="bPhone" placeholder="10-digit phone number" maxlength="10" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label><i class="fas fa-map-marker-alt"></i> Delivery Address <span class="req">*</span></label>
+              <div class="input-icon-wrap textarea-wrap">
+                <i class="fas fa-map-marker-alt"></i>
+                <textarea id="bAddress" rows="3" placeholder="Enter complete delivery address" required></textarea>
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label><i class="fas fa-calendar"></i> Event Date <span class="req">*</span></label>
+                <div class="input-icon-wrap">
+                  <i class="fas fa-calendar"></i>
+                  <input type="date" id="bDate" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label><i class="fas fa-boxes"></i> Quantity</label>
                 <div class="qty-selector">
-                  <button type="button" class="qty-btn" id="qtyMinus">−</button>
-                  <div class="qty-val" id="qtyVal">1</div>
-                  <button type="button" class="qty-btn" id="qtyPlus">+</button>
+                  <button type="button" class="qty-btn" id="qtyMinus">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <span class="qty-val" id="qtyVal">1</span>
+                  <button type="button" class="qty-btn" id="qtyPlus">
+                    <i class="fas fa-plus"></i>
+                  </button>
                 </div>
               </div>
             </div>
-            <div class="order-summary glass">
-              <h3>Order Summary</h3>
-              <div class="sum-row"><span>Price per item</span><span>₹<span id="sumPrice">0</span></span></div>
-              <div class="sum-row"><span>Quantity</span><span>x<span id="sumQty">1</span></span></div>
+
+            <!-- Order Summary -->
+            <div class="order-summary">
+              <div class="order-summary-title">
+                <i class="fas fa-receipt"></i> Order Summary
+              </div>
+              <div class="sum-row">
+                <span class="sum-label">Price per item</span>
+                <span class="sum-val">₹<span id="sumPrice">0</span></span>
+              </div>
+              <div class="sum-row">
+                <span class="sum-label">Quantity</span>
+                <span class="sum-val">×<span id="sumQty">1</span></span>
+              </div>
               <div class="sum-divider"></div>
-              <div class="sum-total"><span>Total Amount</span><span class="gold-text">₹<span id="sumTotal">0</span></span></div>
+              <div class="sum-total-row">
+                <span class="sum-total-label">Total Amount</span>
+                <span class="sum-total-val">₹<span id="sumTotal">0</span></span>
+              </div>
             </div>
-            <button type="submit" class="btn btn-primary btn-full"><i class="fas fa-check-circle"></i> Confirm Booking</button>
+
+            <button type="submit" class="btn btn-primary btn-full" id="bookingSubmitBtn">
+              <i class="fas fa-check-circle"></i> Confirm Booking
+            </button>
           </form>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Success Page -->
+    <div id="successPage" style="display:none;">
+      <div class="success-page">
+        <div class="success-icon-wrap">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h2>Booking Confirmed! 🎉</h2>
+        <p class="success-sub">Your item has been booked successfully</p>
+
+        <div class="success-details">
+          <div class="success-details-head">
+            <i class="fas fa-receipt"></i> Booking Details
+          </div>
+          <div class="detail-row">
+            <span class="detail-label"><i class="fas fa-box"></i> Item</span>
+            <span class="detail-val" id="successItem">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label"><i class="fas fa-sort-numeric-up"></i> Quantity</span>
+            <span class="detail-val" id="successQty">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label"><i class="fas fa-calendar"></i> Event Date</span>
+            <span class="detail-val" id="successDate">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label"><i class="fas fa-user"></i> Name</span>
+            <span class="detail-val" id="successName">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label"><i class="fas fa-phone"></i> Phone</span>
+            <span class="detail-val" id="successPhone">-</span>
+          </div>
+          <div class="detail-row total-row">
+            <span class="detail-label"><i class="fas fa-rupee-sign"></i> Total</span>
+            <span class="detail-val total-val" id="successTotal">-</span>
+          </div>
+        </div>
+
+        <div class="booking-ref" id="bookingRef" style="display:none;"></div>
+
+        <div class="success-btns">
+          <a href="items.html" class="btn btn-primary">
+            <i class="fas fa-shopping-cart"></i> Browse More
+          </a>
+          <a href="my-bookings.html" class="btn btn-secondary">
+            <i class="fas fa-calendar-check"></i> My Bookings
+          </a>
+          <a href="index.html" class="btn btn-outline">
+            <i class="fas fa-home"></i> Home
+          </a>
         </div>
       </div>
     </div>
 
-    <div class="success-page glass-strong" id="successPage">
-      <div class="success-icon"><i class="fas fa-check-circle"></i></div>
-      <h2>Booking Confirmed! 🎉</h2>
-      <p>Your decoration item has been booked successfully</p>
-      <div class="success-details glass">
-        <div class="detail-row"><span>Item</span><span id="successItem">-</span></div>
-        <div class="detail-row"><span>Quantity</span><span id="successQty">-</span></div>
-        <div class="detail-row"><span>Event Date</span><span id="successDate">-</span></div>
-        <div class="detail-row"><span>Total</span><span class="gold-text" id="successTotal">-</span></div>
-      </div>
-      <div class="success-btns">
-        <a href="items.html" class="btn btn-primary">Browse More Items</a>
-        <a href="index.html" class="btn btn-secondary">Go Home</a>
-      </div>
-    </div>
   </div>
 </div>
 
+<!-- FOOTER -->
 <footer class="footer">
   <div class="container">
     <div class="footer-grid">
-      <div class="footer-brand"><div class="footer-logo"><i class="fas fa-crown"></i> Deco<span class="gold-text">Stock</span></div><p>Premium decoration items.</p><div class="social-links"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i class="fab fa-whatsapp"></i></a></div></div>
-      <div class="footer-col"><h3>Quick Links</h3><a href="index.html">Home</a><a href="items.html">Items</a><a href="contact.html">Contact</a></div>
-      <div class="footer-col"><h3>Categories</h3><a href="#">Mandap</a><a href="#">Lighting</a><a href="#">Party</a></div>
-      <div class="footer-col"><h3>Contact</h3><div class="footer-contact-item"><i class="fas fa-phone"></i><span>+91 98765 43210</span></div><div class="footer-contact-item"><i class="fas fa-envelope"></i><span>info@decostock.com</span></div></div>
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <i class="fas fa-crown"></i> Deco<span class="gradient-text">Stock</span>
+        </div>
+        <p>Premium decoration items for your special events.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <a href="index.html">Home</a>
+        <a href="items.html">Items</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h3>Categories</h3>
+        <a href="#">Mandap</a>
+        <a href="#">Lighting</a>
+        <a href="#">Party</a>
+      </div>
+      <div class="footer-col">
+        <h3>Contact</h3>
+        <div class="footer-contact-item">
+          <i class="fas fa-phone"></i><span>+91 98765 43210</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fas fa-envelope"></i><span>info@decostock.com</span>
+        </div>
+      </div>
     </div>
-    <div class="footer-bottom"><p>&copy; 2024 DecoStock. All rights reserved.</p></div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 DecoStock. All rights reserved.</p>
+    </div>
   </div>
 </footer>
 
 <div class="toast" id="toast"></div>
-
 <script src="js/common.js"></script>
 <script src="js/booking.js"></script>
 </body>
