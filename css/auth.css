@@ -1,0 +1,151 @@
+/* ======================================== */
+/* auth.css - Login & Signup Styles         */
+/* ======================================== */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 20px 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.auth-box {
+  width: 100%;
+  max-width: 460px;
+  padding: 45px 38px;
+}
+
+.auth-top {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.auth-top i {
+  font-size: 2.8rem;
+  color: var(--primary);
+  margin-bottom: 14px;
+  display: block;
+}
+
+.auth-top h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 7px;
+}
+
+.auth-top p {
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+}
+
+/* Input with icon */
+.input-wrap {
+  position: relative;
+}
+
+.input-wrap .icon-left {
+  position: absolute;
+  left: 17px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary);
+  font-size: 0.95rem;
+}
+
+.input-wrap input {
+  padding-left: 46px !important;
+}
+
+.input-wrap .eye-icon {
+  position: absolute;
+  right: 17px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.input-wrap .eye-icon:hover {
+  color: var(--primary);
+}
+
+/* Auth Options */
+.auth-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.remember-me input {
+  accent-color: var(--primary);
+  width: auto;
+  padding: 0;
+}
+
+.forgot-link {
+  color: var(--primary);
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.divider span {
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+}
+
+/* Auth Footer */
+.auth-footer {
+  text-align: center;
+  margin-top: 22px;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+}
+
+.auth-footer a {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .auth-box { padding: 32px 22px; }
+  .auth-options { flex-direction: column; gap: 10px; }
+}

@@ -1,0 +1,226 @@
+/* ======================================== */
+/* items.css - Items Page Styles Only       */
+/* ======================================== */
+
+.items-page {
+  padding: 120px 0 60px;
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+/* Search Filter */
+.search-filter {
+  padding: 25px 28px;
+  margin-bottom: 35px;
+}
+
+.search-box {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+.search-box i {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary);
+}
+
+.search-box input {
+  width: 100%;
+  padding: 14px 18px 14px 48px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  color: white;
+  font-size: 0.95rem;
+  font-family: 'Poppins', sans-serif;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+  border-color: rgba(201, 168, 76, 0.4);
+  background: rgba(201, 168, 76, 0.04);
+}
+
+.search-box input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.filter-btns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filter-btns span {
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.filter-btn {
+  padding: 7px 18px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  border-color: rgba(201, 168, 76, 0.4);
+  color: var(--primary);
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: var(--secondary);
+  border-color: transparent;
+  font-weight: 600;
+}
+
+/* Items Grid */
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.item-card {
+  overflow: hidden;
+  transition: all 0.35s ease;
+  cursor: pointer;
+}
+
+.item-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(201, 168, 76, 0.3);
+}
+
+.item-img {
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(201, 168, 76, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  font-size: 4.5rem;
+}
+
+.stock-tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.item-body {
+  padding: 18px;
+}
+
+.item-cat {
+  display: inline-block;
+  padding: 3px 12px;
+  background: rgba(201, 168, 76, 0.12);
+  color: var(--primary);
+  border-radius: 50px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  margin-bottom: 9px;
+}
+
+.item-body h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.item-rating {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+.item-rating span {
+  color: var(--primary);
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.item-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-price {
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.book-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: var(--secondary);
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.82rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.book-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(201, 168, 76, 0.35);
+}
+
+.book-btn.disabled {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.3);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.no-items {
+  text-align: center;
+  padding: 60px;
+  display: none;
+}
+
+.no-items h3 {
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+}
+
+.no-items p {
+  color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .items-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .items-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .items-grid { grid-template-columns: 1fr; }
+  .item-bottom { flex-direction: column; gap: 10px; align-items: flex-start; }
+}

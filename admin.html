@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - DecoStock</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<div class="bg-particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+<nav class="navbar" id="navbar">
+  <div class="container"><div class="nav-inner">
+    <a href="index.html" class="nav-logo"><i class="fas fa-crown"></i> Deco<span class="gold-text">Stock</span></a>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="items.html">Items</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="login.html" class="btn-nav-login">Login</a></li>
+      <li><a href="signup.html" class="btn-nav-signup">Sign Up</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+  </div></div>
+</nav>
+
+<div class="admin-page">
+  <div class="container">
+    <div class="section-title"><h2>Admin Dashboard</h2><div class="line"></div><p>Manage your decoration business</p></div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card glass">
+        <div class="stat-card-icon blue"><i class="fas fa-box"></i></div>
+        <h3 class="gold-text" id="totalItems">12</h3><p>Total Items</p>
+      </div>
+      <div class="stat-card glass">
+        <div class="stat-card-icon green"><i class="fas fa-calendar-check"></i></div>
+        <h3 class="gold-text" id="totalBookings">0</h3><p>Total Bookings</p>
+      </div>
+      <div class="stat-card glass">
+        <div class="stat-card-icon orange"><i class="fas fa-users"></i></div>
+        <h3 class="gold-text">25</h3><p>Total Users</p>
+      </div>
+      <div class="stat-card glass">
+        <div class="stat-card-icon gold"><i class="fas fa-rupee-sign"></i></div>
+        <h3 class="gold-text">₹1.5L</h3><p>Revenue</p>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="admin-tabs">
+      <button class="tab-btn active" data-tab="tabItems"><i class="fas fa-box"></i> Manage Items</button>
+      <button class="tab-btn" data-tab="tabBookings"><i class="fas fa-calendar"></i> Manage Bookings</button>
+      <button class="tab-btn" data-tab="tabAddItem"><i class="fas fa-plus-circle"></i> Add New Item</button>
+    </div>
+
+    <!-- Tab: Items -->
+    <div class="tab-content active" id="tabItems">
+      <div class="admin-table-wrap glass">
+        <table class="admin-table">
+          <thead><tr><th>🎁</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Actions</th></tr></thead>
+          <tbody id="itemsTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tab: Bookings -->
+    <div class="tab-content" id="tabBookings">
+      <div class="admin-table-wrap glass">
+        <table class="admin-table">
+          <thead><tr><th>Customer</th><th>Item</th><th>Qty</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="bookingsTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tab: Add Item -->
+    <div class="tab-content" id="tabAddItem">
+      <div class="add-item-form glass-strong">
+        <h3><i class="fas fa-plus-circle"></i> Add New Decoration Item</h3>
+        <form id="addItemForm">
+          <div class="form-row">
+            <div class="form-group"><label>Item Name</label><input type="text" id="aName" placeholder="Enter item name" required></div>
+            <div class="form-group"><label>Category</label>
+              <select id="aCategory" required>
+                <option value="">Select Category</option>
+                <option value="Mandap">Mandap</option>
+                <option value="Lighting">Lighting</option>
+                <option value="Flowers">Flowers</option>
+                <option value="Setup">Setup</option>
+                <option value="Party">Party</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Price (₹)</label><input type="number" id="aPrice" placeholder="Enter price" required></div>
+            <div class="form-group"><label>Stock Quantity</label><input type="number" id="aStock" placeholder="Enter stock" required></div>
+          </div>
+          <div class="form-group"><label>Emoji Icon</label><input type="text" id="aEmoji" placeholder="e.g. 🎁 🏛️ 💡"></div>
+          <div class="form-group"><label>Description</label><textarea id="aDesc" rows="3" placeholder="Enter item description"></textarea></div>
+          <button type="submit" class="btn btn-primary btn-full"><i class="fas fa-plus"></i> Add Item</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom"><p>&copy; 2024 DecoStock Admin Panel</p></div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/common.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

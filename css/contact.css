@@ -1,0 +1,81 @@
+/* ======================================== */
+/* contact.css - Contact Page Styles        */
+/* ======================================== */
+
+.contact-page {
+  padding: 120px 0 60px;
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 28px;
+  align-items: start;
+}
+
+/* Info Cards */
+.info-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.info-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px;
+  transition: all 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateX(8px);
+  border-color: rgba(201, 168, 76, 0.3);
+}
+
+.info-icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(201, 168, 76, 0.12);
+  border-radius: 14px;
+  color: var(--primary);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.info-card h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.info-card p {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+/* Contact Form */
+.contact-form {
+  padding: 35px;
+}
+
+.contact-form h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contact-grid { grid-template-columns: 1fr; }
+}

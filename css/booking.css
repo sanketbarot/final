@@ -1,0 +1,242 @@
+/* ======================================== */
+/* booking.css - Booking Page Styles Only   */
+/* ======================================== */
+
+.booking-page {
+  padding: 120px 0 60px;
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary);
+  font-weight: 500;
+  margin-bottom: 30px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  gap: 13px;
+}
+
+.booking-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+/* Item Preview */
+.item-preview {
+  padding: 28px;
+  position: sticky;
+  top: 100px;
+}
+
+.preview-img {
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(201, 168, 76, 0.05);
+  border-radius: 15px;
+  font-size: 6rem;
+  margin-bottom: 22px;
+}
+
+.preview-cat {
+  display: inline-block;
+  padding: 3px 12px;
+  background: rgba(201, 168, 76, 0.12);
+  color: var(--primary);
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.item-preview h2 {
+  font-size: 1.65rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.item-preview .desc {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: 0.88rem;
+  margin-bottom: 18px;
+}
+
+.preview-price {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.preview-price small {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  -webkit-text-fill-color: var(--text-secondary);
+}
+
+.stock-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--success);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Booking Form */
+.booking-form {
+  padding: 32px;
+}
+
+.booking-form h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* Quantity */
+.qty-selector {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.qty-btn {
+  width: 48px;
+  height: 50px;
+  background: rgba(201, 168, 76, 0.1);
+  border: none;
+  color: var(--primary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.qty-btn:hover {
+  background: rgba(201, 168, 76, 0.2);
+}
+
+.qty-val {
+  flex: 1;
+  text-align: center;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: white;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 12px;
+}
+
+/* Order Summary */
+.order-summary {
+  padding: 22px;
+  margin: 22px 0;
+}
+
+.order-summary h3 {
+  font-size: 1rem;
+  color: var(--primary);
+  margin-bottom: 14px;
+}
+
+.sum-row {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  margin-bottom: 9px;
+}
+
+.sum-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 12px 0;
+}
+
+.sum-total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+/* Success Page */
+.success-page {
+  display: none;
+  text-align: center;
+  padding: 60px 40px;
+  max-width: 520px;
+  margin: 40px auto;
+}
+
+.success-icon {
+  font-size: 4rem;
+  color: var(--success);
+  margin-bottom: 20px;
+}
+
+.success-page h2 {
+  font-size: 1.9rem;
+  margin-bottom: 10px;
+}
+
+.success-page > p {
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+}
+
+.success-details {
+  text-align: left;
+  padding: 22px;
+  margin-bottom: 28px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.9rem;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row span:first-child {
+  color: var(--text-secondary);
+}
+
+.success-btns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .booking-grid { grid-template-columns: 1fr; }
+  .item-preview { position: static; }
+  .success-btns { flex-direction: column; }
+}
+
+@media (max-width: 480px) {
+  .preview-price { font-size: 1.6rem; }
+}
